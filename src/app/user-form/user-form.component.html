@@ -1,0 +1,20 @@
+<form [formGroup]="userForm" (ngSubmit)="submitForm()">
+  <label>Name:</label>
+  <input type="text" formControlName="name" required />
+
+  <label>Age:</label>
+  <input type="number" formControlName="age" required />
+
+  <label>Experience (years):</label>
+  <input type="number" formControlName="experience" required />
+
+  <label>Graduation Year:</label>
+  <input type="number" formControlName="graduationYear" required />
+
+  <label>Skills:</label>
+  <select formControlName="skills" required>
+    <option *ngFor="let skill of skills" [value]="skill">{{ skill }}</option>
+  </select>
+
+  <button type="submit" [disabled]="userForm.invalid">Submit</button>
+</form>

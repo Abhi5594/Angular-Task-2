@@ -1,0 +1,24 @@
+<label>Select Status:</label>
+<select (change)="onStatusChange($event)">
+  <option value="">All</option>
+  <option *ngFor="let status of statuses" [value]="status">{{ status }}</option>
+</select>
+
+<table border="1">
+  <tr>
+    <th>Name</th>
+    <th>Age</th>
+    <th>Experience</th>
+    <th>Graduation Year</th>
+    <th>Skills</th>
+    <th>Status</th>
+  </tr>
+  <tr *ngFor="let user of filteredUsers">
+    <td>{{ user.name }}</td>
+    <td>{{ user.age }}</td>
+    <td>{{ user.experience }}</td>
+    <td>{{ user.graduationYear }}</td>
+    <td>{{ user.skills }}</td>
+    <td>{{ user.status }}</td>
+  </tr>
+</table>
