@@ -1,3 +1,4 @@
+// I'm creating a standalone user form component with Angular forms and a shared service.
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -6,12 +7,14 @@ import { SharedService, User } from '../shared.service';
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule], // Ensure ReactiveFormsModule is imported
+  imports: [ReactiveFormsModule, CommonModule], 
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.css'],
 })
 export class UserFormComponent {
-  userForm: FormGroup; // Define the form group
+  userForm: FormGroup;
+
+  // This list contains predefined skills for user selection.
   skills = [
     'Programming Languages (Python, JavaScript, Java, C++)',
     'Frontend Development (HTML, CSS, JavaScript, React, Angular)',
@@ -26,18 +29,18 @@ export class UserFormComponent {
   ];
 
   constructor(private fb: FormBuilder, private dataService: SharedService) {
-    // Initialize the form group with form controls and validators
+    // Initializing the form with required fields and validation rules.
     this.userForm = this.fb.group({
       name: ['', Validators.required],
       age: ['', [Validators.required, Validators.min(18), Validators.max(60)]],
       experience: ['', Validators.required],
       graduationYear: ['', [Validators.required, Validators.min(2020)]],
       skills: ['', Validators.required],
-      status: [''], // Status will be determined programmatically
+      status: [''], 
     });
   }
 
-  // Determine the status based on age and experience
+  // This function determines the user's status based on age and experience.
   determineStatus(): string {
     const { age, experience } = this.userForm.value;
 
@@ -47,13 +50,13 @@ export class UserFormComponent {
     return 'Cancelled';
   }
 
-  // Handle form submission
+  // Submitting the form, saving the data, and resetting the form after submission.
   submitForm() {
     if (this.userForm.valid) {
       const status = this.determineStatus();
-      const userData: User = { ...this.userForm.value, status }; // Add status to the form data
-      this.dataService.addUser(userData); // Add the user to the shared service
-      this.userForm.reset(); // Reset the form
+      const userData: User = { ...this.userForm.value, status };
+      this.dataService.addUser(userData);
+      this.userForm.reset();
     }
   }
 }
